@@ -12,12 +12,13 @@ def get_nodes():
     print(command_line)
     p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
+    output = str(output)
     if err is None:
-        for line in output.split("\\n"):
-            if "NAME" not in line:
-                if "Ready" in line:
-                    continue
-                else:
+        for line in output.split('\\n'):
+            if 'NAME' not in line:
+                if 'Ready' in line:
+                    print(line)
+                elif line != "'":
                     print("Machine is not ready!")
                     print(line)
                     return res
@@ -37,8 +38,8 @@ def get_pods():
         for line in output.split("\\n"):
             if "NAME" not in line:
                 if "Running" in line or "Completed" in line:
-                    continue
-                else:
+                    print(line)
+                elif line!="'":
                     print("Machine is not ready!")
                     print(line)
                     return res
