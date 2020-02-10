@@ -79,7 +79,6 @@ def get_logs():
         (output, err) = p.communicate()
         output = str(output)
         if p.returncode == 0:
-        #if err is None:
             statinfo = os.stat('log.txt')
             if statinfo.st_size > 0:
                 continue
