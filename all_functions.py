@@ -29,7 +29,7 @@ def get_nodes():
 
 def get_pods():
     res = 1
-    command_line = "oc get pods"
+    command_line = "oc get pods --all-namespaces"
     print(command_line)
     p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
