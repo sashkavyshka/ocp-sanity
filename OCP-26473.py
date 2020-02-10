@@ -13,6 +13,12 @@ def OCP_26473():
         return res
     return res
 
+    print("Trying to get logs")
+    res = get_logs()
+    if res !=0:
+        return res
+    return res
+
 if __name__ == "__main__":
     res = OCP_26473()
     if res == 0:
