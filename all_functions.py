@@ -83,6 +83,7 @@ def get_logs():
             if statinfo.st_size > 0:
                 continue
             else:
+                print(err)
                 print("Empty logfile for pod %s in namespace %s"%(el[0], el[1]))
                 res = 1
                 return res
