@@ -105,15 +105,12 @@ def get_logs():
                         if statinfo.st_size > 0:
                             continue
                         else:
-                            print("Empty logfile for container %s in pod %s in namespace %s"%(c, el[0], el[1]))
+                            print("ERROR: Empty logfile for container %s in pod %s in namespace %s"%(c, el[0], el[1]))
                             res = 1
-                            return res
                     else:
                         print(err)
              else:
                 print("ERROR: Failed to find logfile for pod %s in namespace %s"%(el[0], el[1]))
                 res = 1
-                return res
-
 
     return res
