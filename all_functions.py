@@ -77,7 +77,7 @@ def get_logs():
         print(command_line)
         p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
-        output = str(output)
+        #output = str(output)
         print("OUTPUT: %s, ERR: %s"%(output, err))
         if "Error" not in output:
             statinfo = os.stat('log.txt')
