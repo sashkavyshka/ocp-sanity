@@ -13,7 +13,8 @@ def get_nodes():
     p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     output = str(output)
-    if err is None:
+    err=str(err)
+    if err is "":
         for line in output.split('\\n'):
             if 'NAME' not in line:
                 if 'Ready' in line:
@@ -34,7 +35,8 @@ def get_pods():
     p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     output = str(output)
-    if err is None:
+    err=str(err)
+    if err is "":
         for line in output.split("\\n"):
             if "NAME" not in line:
                 if "Running" in line or "Completed" in line:
@@ -57,7 +59,8 @@ def get_logs():
     p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     output = str(output)
-    if err is None:
+    err=str(err)
+    if err is "":
         for line in output.split("\\n"):
             if "NAME" not in line:
                 if "Running" in line or "Completed" in line:
