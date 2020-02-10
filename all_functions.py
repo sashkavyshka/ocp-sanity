@@ -81,6 +81,7 @@ def get_logs():
         p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         output = str(output)
+        err=str(err)
         if p.returncode == 0:
             statinfo = os.stat('log.txt')
             if statinfo.st_size > 0:
