@@ -14,7 +14,7 @@ def get_nodes():
     (output, err) = p.communicate()
     output = str(output)
     err=str(err)
-    if err is "":
+    if p.returncode == 0:
         for line in output.split('\\n'):
             if 'NAME' not in line:
                 if 'Ready' in line:
@@ -36,7 +36,7 @@ def get_pods():
     (output, err) = p.communicate()
     output = str(output)
     err=str(err)
-    if err is "":
+    if p.returncode == 0:
         for line in output.split("\\n"):
             if "NAME" not in line:
                 if "Running" in line or "Completed" in line:
@@ -60,7 +60,7 @@ def get_logs():
     (output, err) = p.communicate()
     output = str(output)
     err=str(err)
-    if err is "":
+    if p.returncode == 0:
         for line in output.split("\\n"):
             if "NAME" not in line:
                 if "Running" in line or "Completed" in line:
