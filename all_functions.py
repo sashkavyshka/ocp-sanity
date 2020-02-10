@@ -78,7 +78,7 @@ def get_logs():
         p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         output = str(output)
-        if err is None:
+        if err is None and "Error" not in output:
             statinfo = os.stat('log.txt')
             if statinfo.st_size > 0:
                 continue
@@ -86,7 +86,7 @@ def get_logs():
                 print(err)
                 print("Empty logfile for pod %s in namespace %s"%(el[0], el[1]))
                 res = 1
-                return res
+
         else:
              if err == 1:
                  if "a container name must be specified" in output:
