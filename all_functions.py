@@ -93,7 +93,7 @@ def get_logs():
         else:
              if "a container name must be specified" in err:
                 print("ERROR: %s"%err)
-                el[2] = err.split(":")[-4].strip().strip("[").strip("]").split()
+                el[2] = err.split(":")[-1].strip().strip("[").strip("]").split()
                 el[2][-1]=el[2][-1][:-4]
                 print("Containers: %s"%el[2])
                 for c in el[2]:
