@@ -88,27 +88,26 @@ def get_logs():
                 res = 1
 
         else:
-             if err == 1:
-                 if "a container name must be specified" in output:
-                    el[2] = output.split(":")[-1].strip().strip("[").strip("]").split()
-                    for c in el[2]:
-                        command_line = "oc logs %s -n %s -c %s> log.txt"%(el[0], el[1], c)
-                        print(command_line)
-                        p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
-                        (output, err) = p.communicate()
-                        output = str(output)
-                        if err is None:
-                            statinfo = os.stat('log.txt')
-                            if statinfo.st_size > 0:
-                                continue
-                            else:
-                                print("Empty logfile for container %s in pod %s in namespace %s"%(c, el[0], el[1]))
-                                res = 1
-                                return res
-                 else:
-                    print("Fail to find logfile for pod %s in namespace %s"%(el[0], el[1]))
-                    res = 1
-                    return res
+             if "a container name must be specified" in output:
+                el[2] = output.split(":")[-1].strip().strip("[").strip("]").split()
+                for c in el[2]:
+                    command_line = "oc logs %s -n %s -c %s> log.txt"%(el[0], el[1], c)
+                    print(command_line)
+                    p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
+                    (output, err) = p.communicate()
+                    output = str(output)
+                    if err is None:
+                        statinfo = os.stat('log.txt')
+                        if statinfo.st_size > 0:
+                            continue
+                        else:
+                            print("Empty logfile for container %s in pod %s in namespace %s"%(c, el[0], el[1]))
+                            res = 1
+                            return res
+             else:
+                print("Fail to find logfile for pod %s in namespace %s"%(el[0], el[1]))
+                res = 1
+                return res
 
 
     return res
