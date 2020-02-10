@@ -10,7 +10,7 @@ def get_nodes():
     res = 1
     command_line = "oc get nodes"
     print(command_line)
-    p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     output = str(output)
     if err is None:
@@ -31,7 +31,7 @@ def get_pods():
     res = 1
     command_line = "oc get pods --all-namespaces"
     print(command_line)
-    p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     output = str(output)
     if err is None:
@@ -54,7 +54,7 @@ def get_logs():
     #Get the list of all pods in all namespaces
     pod_list = []
     print(command_line)
-    p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
+    p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     output = str(output)
     if err is None:
@@ -75,11 +75,11 @@ def get_logs():
     for el in pod_list:
         command_line = "oc logs %s -n %s > log.txt"%(el[0], el[1])
         print(command_line)
-        p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
+        p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
-        #output = str(output)
-        print("OUTPUT: %s, ERR: %s"%(output, err))
-        if "Error" not in output:
+        output = str(output)
+        if p.returncode == 0:
+        #if err is None:
             statinfo = os.stat('log.txt')
             if statinfo.st_size > 0:
                 continue
@@ -87,9 +87,8 @@ def get_logs():
                 print("Empty logfile for pod %s in namespace %s"%(el[0], el[1]))
                 res = 1
                 return res
-
         else:
-             if "a container name must be specified" in output:
+             if "a container name must be specified" in err:
                 el[2] = output.split(":")[-1].strip().strip("[").strip("]").split()
                 print("Containers: %s"%el[2])
                 for c in el[2]:
