@@ -78,7 +78,7 @@ def get_logs():
         p = subprocess.Popen(command_line, stdout=subprocess.PIPE, shell=True)
         (output, err) = p.communicate()
         output = str(output)
-        if err is None and "Error" not in output:
+        if "Error" not in output:
             statinfo = os.stat('log.txt')
             if statinfo.st_size > 0:
                 continue
@@ -90,6 +90,7 @@ def get_logs():
         else:
              if "a container name must be specified" in output:
                 el[2] = output.split(":")[-1].strip().strip("[").strip("]").split()
+                print("Containers: %s"%el[2])
                 for c in el[2]:
                     command_line = "oc logs %s -n %s -c %s> log.txt"%(el[0], el[1], c)
                     print(command_line)
