@@ -92,7 +92,8 @@ def get_logs():
                 return res
         else:
              if "a container name must be specified" in err:
-                el[2] = err.split(":")[-1].strip().strip("[").strip("]").split()
+                print("ERROR: %s"%err)
+                el[2] = err.split(":")[-4].strip().strip("[").strip("]").split()
                 print("Containers: %s"%el[2])
                 for c in el[2]:
                     command_line = "oc logs %s -n %s -c %s> log.txt"%(el[0], el[1], c)
