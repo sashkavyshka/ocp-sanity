@@ -87,17 +87,14 @@ def get_logs():
             if statinfo.st_size > 0:
                 continue
             else:
-                print("Empty logfile for pod %s in namespace %s"%(el[0], el[1]))
+                print("ERROR: Empty logfile for pod %s in namespace %s"%(el[0], el[1]))
                 res = 1
-                return res
         else:
              if "a container name must be specified" in err:
-                print("ERROR: %s"%err)
                 el[2] = err.split(":")[-1].strip().strip("[").strip("]").split()
                 el[2][-1]=el[2][-1][:-4]
-                print("Containers: %s"%el[2])
                 for c in el[2]:
-                    command_line = "oc logs %s -n %s -c %s> log.txt"%(el[0], el[1], c)
+                    command_line = "oc logs %s -n %s -c %s > log.txt"%(el[0], el[1], c)
                     print(command_line)
                     p = subprocess.Popen(command_line, stdout=subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
                     (output, err) = p.communicate()
@@ -114,7 +111,7 @@ def get_logs():
                     else:
                         print(err)
              else:
-                print("Fail to find logfile for pod %s in namespace %s"%(el[0], el[1]))
+                print("ERROR: Failed to find logfile for pod %s in namespace %s"%(el[0], el[1]))
                 res = 1
                 return res
 
